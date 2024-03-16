@@ -18,7 +18,7 @@ public abstract class BaseStatistics implements Statistics{
     protected void validateCall(){
         synchronized (lock) {
             if (totalElements == 0) {
-                throw new RuntimeException("Mean is undefined as there are no events yet.");
+                throw new IllegalStateException("Mean is undefined as there are no events yet.");
             }
         }
     }

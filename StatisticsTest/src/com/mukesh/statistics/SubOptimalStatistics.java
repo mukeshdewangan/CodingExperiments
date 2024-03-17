@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Variance, σ^2 will be calculated as σ^2 = (∑(xi - µ)^2)/N
+ * Variance, σ^2 will be calculated with basic calculation as σ^2 = (∑(xi - µ)^2)/N
  */
 
 public class SubOptimalStatistics extends BaseStatistics {
@@ -39,7 +39,7 @@ public class SubOptimalStatistics extends BaseStatistics {
      */
     @Override
     public float variance() {
-        // We need to use synchronized block to handle any mutation of any dependent variants
+        // We need to use synchronized block to handle mutation of any dependent variants
         synchronized(lock) {
             long squaredSum = 0L;
             for (Integer num : numbers) {
@@ -51,6 +51,8 @@ public class SubOptimalStatistics extends BaseStatistics {
     }
 
     private void updateInternalVariables(int num){
+        // We need execute the operations of calculating min, max, mean and variance in synchronized block
+        // to handle multiple threads in Critical section
         synchronized (lock) {
             updateInternals(num);
             numbers.add(num);

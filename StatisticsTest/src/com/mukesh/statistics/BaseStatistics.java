@@ -16,6 +16,8 @@ public abstract class BaseStatistics implements Statistics{
     protected int currentMin = Integer.MAX_VALUE;
     protected int currentMax = Integer.MIN_VALUE;
     protected void validateCall(){
+        // Using synchronized block to validate the totalElements inserted,
+        // so that no other thread modifies the totalElements count
         synchronized (lock) {
             if (totalElements == 0) {
                 throw new IllegalStateException("Mean is undefined as there are no events yet.");
@@ -23,6 +25,11 @@ public abstract class BaseStatistics implements Statistics{
         }
     }
 
+    /**
+     * This method updates the internal variables such sum, totalElements etc.
+     * This is not made synchronized explicitly because that concrete implementation of BaseStatistics will control that.
+     * @param num
+     */
     protected void updateInternals(int num){
         totalElements++;
         sum += num;

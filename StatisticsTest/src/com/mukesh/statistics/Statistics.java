@@ -6,8 +6,14 @@ package src.com.mukesh.statistics;
  * 1. min(), max, mean() and variance() will throw IllegalStateException if no events have been consumed
  * 2. Interface should be complete so adding functionality later does not become a problem,
  * so I would like to add two more functions
- *      2.a) float standardDeviation();
- *      2.b) void resetData();
+ *      2.a) void resetData(); - to reset the tracking.
+ *      2.b) float standardDeviation(); - Standard Deviation measures the dispersion of observations within a set.
+ * 3. Issue - the event(int n) is only accepting Integer, but in future it might be open for long, float etc.
+ * So, we can define Statistics as below -
+ *     public interface Statistics<T extends Number> {...}
+ * and concrete class can be defined as
+ *     public class IntegerStatistics implements Statistics<Integer> {...}
+ *    public class LongStatistics implements Statistics<Long> {...}
  */
 public interface Statistics {
     /**
